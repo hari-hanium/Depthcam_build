@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            table {
+                display: inline-block;
+            }
+
+            #score {
+                border: 1px solid;
+
+                padding: 10px;
+
+                font-size: 12px;
+            }
+
+            #score td {
+                text-align: center;
+            }
+
+            .title {
+                font-size: 16px;
+            }
+
+            .small {
+                font-size: 8px;
+            }
+
+            #yut {
+                border: 1px solid;
+
+                padding: 10px;
+                
+                background: palegoldenrod;
+            }
+
+            #yut td {
+                text-align: center;
+            }
+
+            .cell {
+                width: 10px;
+                height: 10px;
+
+                border: 1px solid;
+                border-radius: 100px;
+                
+                display: inline-block;
+
+                margin-left: 5px;
+                margin-right: 5px;
+                
+                background: paleturquoise;
+            }
+
+            .block {
+                display: block;
+
+                margin: auto;
+
+                margin-top: 17.5px;
+                margin-bottom: 17.5px;
+            }
+
+            .big {
+                width: 20px;
+                height: 20px;
+                
+                vertical-align: middle;
+                line-height: 10px;
+
+                margin: 0;
+                
+                background: palevioletred;
+            }
+
+            .center {
+                background: palegreen;
+            }
+
+            .none {
+                border: transparent;
+                background: transparent;
+            }
+
+            .user {
+                width: 20px;
+                height: 20px;
+
+                line-height: 17.5px;
+                
+                border: 1px solid;
+                
+                margin-left: -6px;
+                margin-top: -6px;
+            }
+
+            .big .user {
+                margin-left: -1px;
+                margin-top: -1px;
+            }
+
+            #user_1 {
+                background: darkseagreen;
+            }
+
+            #user_2 {
+                background: darkorange;
+            }
+
+            #user_3 {
+                background: goldenrod;
+            }
+
+            #user_4 {
+                background: plum;
+            }
+
+            #line_3 {
+                text-align: center;
+            }
+
+            #line_4 {
+                text-align: center;
+            }
+
+            #shot {
+                width: 250px;
+                height: 250px;
+
+                border: 1px solid;
+            }
+        </style>
+    </head>
+    <body>
+        <table id="shot">
+            <tr>
+                <td></td>
+            </tr>
+        </table>
+        <table id="yut">
+            <tr>
+                <td rowspan="7">
+                    <div class="cell big block"></div>
+                    <div class="cell block"></div>
+                    <div class="cell block"></div>
+                    <div class="cell block"></div>
+                    <div class="cell block"></div>
+                    <div class="cell big block"><div class="user" id="user_3">2</div></div>
+                </td>
+                <td id="line_1">
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"><div class="user" id="user_1"></div></div>
+                    <div class="cell"></div>
+                </td>
+                <td rowspan="7">
+                    <div class="cell big block"><div class="user" id="user_2"></div></div>
+                    <div class="cell block"></div>
+                    <div class="cell block"></div>
+                    <div class="cell block"></div>
+                    <div class="cell block"><div class="user" id="user_1"></div></div>
+                    <div class="cell big block"></div>
+                </td>
+            </tr>
+            <tr>
+                <td id="line_2">
+                    <div class="cell"><div class="user" id="user_4"></div></div>
+                    <div class="cell none"></div>
+                    <div class="cell none"></div>
+                    <div class="cell"></div>
+                </td>
+            </tr>
+            <tr>
+                <td id="line_3">
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                </td>
+            </tr>
+            <tr>
+                <td id="line_4">
+                    <div class="cell big center"></div>
+                </td>
+            </tr>
+            <tr>
+                <td id="line_3">
+                    <div class="cell"></div>
+                    <div class="cell"><div class="user" id="user_2"></div></div>
+                </td>
+            </tr>
+            <tr>
+                <td id="line_2">
+                    <div class="cell"></div>
+                    <div class="cell none"></div>
+                    <div class="cell none"></div>
+                    <div class="cell"></div>
+                </td>
+            </tr>
+                <td id="line_1">
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                </td>
+            </tr>
+        </table>
+        <table id="score">
+            <tr>
+                <td colspan="2">
+                    <div class="title">점수판</div>
+                </td>
+            </tr>
+            <tr>
+                <td id="user_1">사용자 1</td>
+                <td>0점</td>
+            </tr>
+            <tr>
+                <td class="small">남은 말</td>
+                <td class="small">2개</td>
+            </tr>
+            <tr>
+                <td id="user_2">사용자 2</td>
+                <td>1점</td>
+            </tr>
+            <tr>
+                <td class="small">남은 말</td>
+                <td class="small">1개</td>
+            </tr>
+            <tr>
+                <td id="user_3">사용자 3</td>
+                <td>0점</td>
+            </tr>
+            <tr>
+                <td class="small">남은 말</td>
+                <td class="small">2개</td>
+            </tr>
+            <tr>
+                <td id="user_4">사용자 4</td>
+                <td>2점</td>
+            </tr>
+            <tr>
+                <td class="small">남은 말</td>
+                <td class="small">1개</td>
+            </tr>
+        </table>
+    </body>
+</html>
