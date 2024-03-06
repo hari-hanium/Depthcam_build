@@ -165,35 +165,35 @@
             </tr>
             <tr>
                 <td class="line_2">
-                    <div class="cell"></div>
+                    <div id="cell_201" class="cell"></div>
                     <div class="cell none"></div>
                     <div class="cell none"></div>
-                    <div class="cell"></div>
+                    <div id="cell_101" class="cell"></div>
                 </td>
             </tr>
             <tr>
                 <td class="line_3">
-                    <div class="cell"></div>
-                    <div class="cell"></div>
+                    <div id="cell_202" class="cell"></div>
+                    <div id="cell_102" class="cell"></div>
                 </td>
             </tr>
             <tr>
                 <td class="line_4">
-                    <div class="cell big center"></div>
+                    <div id="cell_103" class="cell big center"></div>
                 </td>
             </tr>
             <tr>
                 <td class="line_3">
-                    <div class="cell"></div>
-                    <div class="cell"></div>
+                    <div id="cell_104" class="cell"></div>
+                    <div id="cell_204" class="cell"></div>
                 </td>
             </tr>
             <tr>
                 <td class="line_2">
-                    <div class="cell"></div>
+                    <div id="cell_105" class="cell"></div>
                     <div class="cell none"></div>
                     <div class="cell none"></div>
-                    <div class="cell"></div>
+                    <div id="cell_205" class="cell"></div>
                 </td>
             </tr>
                 <td class="line_1">
@@ -263,7 +263,54 @@
                 }
             }
 
+            function calc_to(from, to) {
+                if(from === 5) {
+                    from = 100;
+                } else if(from === 10) {
+                    from = 200;
+                } else if(from === 103) {
+                    from = 203;
+                } else if(from === 0 && to === -1) {
+                    from = 20;
+                }
+
+                let calc = from + to;
+                if(calc === 100) {
+                    calc = 5;
+                } else if(calc === 200) {
+                    calc = 10;
+                } else if(calc === 203) {
+                    calc = 103;
+                }
+
+                console.log('calc', calc, from, to);
+                if(100 <= calc && calc < 200) {
+                    if(106 <= calc) {
+                        calc = calc - 106 + 15;
+                    }
+                } else if(200 <= calc) {
+                    if(calc === 206) {
+                        calc = 0;
+                    } else if(206 < calc) {
+                        calc = '';
+                    }
+                } else {
+                    if(calc === 20) {
+                        calc = 0;
+                    } else if(20 < calc) {
+                        calc = '';
+                    } else if(from === 0) {
+                        calc = '';
+                    }
+                }
+
+                console.log('calc_end', calc);
+                return calc;
+            }
+
             function batch_unit(from, to) {
+                console.log('batch', from, to);
+
                 let count = 1;
                 if(from !== '') {
                     count = cell_unit[from][1];
@@ -288,53 +335,96 @@
                 }
 
                 console.log(cell_unit);
+                
+                remove_unit_select();
+            }
+
+            function remove_unit_select() {
+                for(let for_a = 0; for_a < document.getElementsByClassName('user_' + String(player_turn + 1) + '_unit').length; for_a++) {
+                    console.log([for_a, document.getElementsByClassName('user_' + String(player_turn + 1) + '_unit')[for_a]]);
+                    document.getElementsByClassName('user_' + String(player_turn + 1) + '_unit')[for_a].addEventListener('click', function() {});
+                }
+
                 render_batch();
             }
 
-            function add_unit_select() {
-                for(let for_a = 0; for_a < document.getElementsByClassName('user').length; for_a++) {
-                    console.log(for_a, document.getElementsByClassName('user_' + String(player_turn + 1) + '_unit')[for_a]);
+            function add_unit_select(to) {
+                for(let for_a = 0; for_a < document.getElementsByClassName('user_' + String(player_turn + 1) + '_unit').length; for_a++) {
+                    console.log([for_a, document.getElementsByClassName('user_' + String(player_turn + 1) + '_unit')[for_a]]);
                     document.getElementsByClassName('user_' + String(player_turn + 1) + '_unit')[for_a].addEventListener('click', function() {
+                        let from = document.getElementsByClassName('user_' + String(player_turn + 1) + '_unit')[for_a].id;
                         
+                        console.log(['add_unit_select', Number(from), to]);
+                        batch_unit(Number(from), calc_to(Number(from), to));
                     });
                 }
             }
 
             function render_batch() {
                 for(let key in cell_unit) {
-                    let turn = String(cell_unit[key][0] + 1);
-                    let count = String(cell_unit[key][1]);
-                    if(count === '1') {
-                        count = '';
+                    if(cell_unit[key] !== undefined) {
+                        let turn = String(cell_unit[key][0] + 1);
+                        let count = String(cell_unit[key][1]);
+                        if(count === '1') {
+                            count = '';
+                        }
+                        
+                        console.log(turn, count);
+                        document.getElementById('cell_' + String(key)).innerHTML = '<div class="user user_' + turn + '_unit" id="' + String(key) + '">' + count + '</div>';
+                    } else {
+                        document.getElementById('cell_' + String(key)).innerHTML = '';
                     }
-                    
-                    console.log(turn, count);
-                    document.getElementById('cell_' + String(key)).innerHTML = '<div class="user user_' + turn + '_unit">' + count + '</div>';
                 }
+
+                console.log('점수표 초기화');
+                update_score();
+                
+                setTimeout(function() {
+                    do_game();
+                }, 3000);
             }
 
-            let player = Number(prompt("인원을 입력해주세요. (최대 4명)"));
+            let player = prompt("인원을 입력해주세요. (최대 4명)");
+            if(player === 'break') {
+                throw 'dev';
+            }
+
+            player = Number(player);
             console.log('인원 ' + String(player) + '명');
 
             let player_point = [];
             let player_unit = [];
             let cell_unit = {};
+            let repeat = 0;
             let player_turn = -1;
+
             for(let for_a = 0; for_a < player; for_a++) {
                 player_point.push(0);
                 player_unit.push(4);
             }
             console.log('초기 선언 ' + String(player_point));
 
+            console.log('점수표 초기화');
+            update_score();
+
             console.log('게임 시작');
             do_game();
 
             function do_game() {
                 if(player_point.includes(4)) {
+                    for(let for_a = 0; for_a < player_point.length; for_a++) {
+                        if(player_point[for_a] === 4) {
+                            console.log("사용자 " + String(for_a + 1) + " 승리 (다시하려면 F5를 눌러주세요)");
+                        }
+                    }
+
                     return;
                 }
-                update_score();
-                console.log('점수표 초기화');
+
+                if(repeat === 1) {
+                    player_turn -= 1;
+                    repeat = 0;
+                }
 
                 player_turn += 1;
                 if(player_turn >= player) {
@@ -372,21 +462,36 @@
                             yut = 5;
                         }
 
+                        if(yut === 4 || yut === 5) {
+                            repeat = 1;
+                        }
+
                         let new_unit = false;
                         if(player_unit[player_turn] !== 0) {
-                            new_unit = confirm('새 말을 배치하겠습니까?');
+                            if(document.getElementsByClassName('user_' + String(player_turn + 1) + '_unit').length !== 0) {
+                                if(yut === 0) {
+                                    new_unit = false;
+                                } else {
+                                    new_unit = confirm('새 말을 배치하겠습니까?');
+                                }
+                            } else {
+                                new_unit = true;
+                            }
+                            
                             if(new_unit === true) {
                                 console.log('사용자 ' + String(player_turn + 1) + ' 새 말 배치');
 
-                                batch_unit('', yut, player_turn);
-                                do_game();
+                                batch_unit('', yut);
                             }
                         }
 
                         if(new_unit === false) {
                             console.log('사용자 ' + String(player_turn + 1) + ' 새 말 배치 안함');
+                            if(yut === 0) {
+                                yut = -1;
+                            }
 
-
+                            add_unit_select(yut);
                         }
                     }, 3000);
                 } else {
