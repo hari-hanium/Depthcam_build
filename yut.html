@@ -414,11 +414,12 @@
                 if(player_point.includes(4)) {
                     for(let for_a = 0; for_a < player_point.length; for_a++) {
                         if(player_point[for_a] === 4) {
-                            console.log("사용자 " + String(for_a + 1) + " 승리 (다시하려면 F5를 눌러주세요)");
+                            alert("사용자 " + String(for_a + 1) + " 승리 (다시하려면 F5를 눌러주세요)");
+
+                            console.log(player_point);
+                            return;
                         }
                     }
-
-                    return;
                 }
 
                 if(repeat === 1) {
@@ -503,7 +504,6 @@
                     }, 3000);
                 }
             }
-            console.log(player_point);
         </script>
     </body>
 </html>
